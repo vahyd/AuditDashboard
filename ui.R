@@ -7,6 +7,7 @@ pageWithSidebar(
                 
   ),
   mainPanel(
+    plotlyOutput("plot"),
     dataTableOutput('table')
   )
 )

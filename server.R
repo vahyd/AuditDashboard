@@ -15,4 +15,35 @@ function(input, output, session) {
   
   output$table <- renderDataTable(selectedData())
   
+  
+  output$plot <- renderPlotly({
+    # light grey boundaries
+    l <- list(color = toRGB("grey"), width = 0.5)
+    
+    # specify map projection/options
+    g <- list(
+      showframe = FALSE,
+      showcoastlines = FALSE,
+      #projection = list(type = 'Mercator'),
+      showframe = FALSE,
+      showcoastlines = FALSE,
+      showland = FALSE,
+      showcountries = TRUE,
+      showocean = FALSE,
+      
+      projection = list(type = 'equirectangular', scale =1)
+    )
+    
+    p <- plot_geo(df) %>%
+      add_trace(
+        z = ~YEAR, color = ~YEAR, colors = 'Blues',
+        text = ~COUNTRY, locations = ~CODE, marker = list(line = l), showscale=FALSE 
+      ) %>%
+       
+      layout(
+        geo = g
+      )
+    
+  })
+  
 }
