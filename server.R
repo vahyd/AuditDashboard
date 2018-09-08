@@ -13,12 +13,32 @@ function(input, output, session) {
       MyData[MyData$sector == input$sector, ]
   })
   
+  selectedDf <- reactive({
+    tmpDf <- df
+    tmpData <- selectedData()
+    if(nrow(tmpData)==0)  {
+      MyDataAgg <-  data.frame()
+      df
+    }else{
+      MyDataAgg = aggregate(tmpData$Count,list(tmpData$country),FUN = sum)
+      colnames(MyDataAgg) <- c("country","numbber.of.reports")
+      
+      l = 1
+      for (i in MyDataAgg$country){
+        tmpDf[tmpDf$COUNTRY == i,][3] = MyDataAgg$numbber.of.reports[l]
+        l= l + 1
+      }
+      tmpDf  
+    }
+    
+  })
+  
   output$table <- renderDataTable(selectedData())
   
   
   output$plot <- renderPlotly({
     # light grey boundaries
-    l <- list(color = toRGB("grey"), width = 0.5)
+    l <- list(color = toRGB("grey"), width = 1)
     
     # specify map projection/options
     g <- list(
@@ -34,7 +54,7 @@ function(input, output, session) {
       projection = list(type = 'equirectangular', scale =1)
     )
     
-    p <- plot_geo(df) %>%
+    p <- plot_geo(selectedDf()) %>%
       add_trace(
         z = ~NUM, color = ~NUM, colors = 'Blues',
         text = ~COUNTRY, locations = ~CODE, marker = list(line = l)
