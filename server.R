@@ -36,10 +36,11 @@ function(input, output, session) {
     
     p <- plot_geo(df) %>%
       add_trace(
-        z = ~YEAR, color = ~YEAR, colors = 'Blues',
-        text = ~COUNTRY, locations = ~CODE, marker = list(line = l), showscale=FALSE 
+        z = ~NUM, color = ~NUM, colors = 'Blues',
+        text = ~COUNTRY, locations = ~CODE, marker = list(line = l)
       ) %>%
-       
+      layout(showlegend = TRUE, legend = list(font = list(size = 30)))%>%
+      
       layout(
         geo = g
       )
