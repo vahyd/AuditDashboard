@@ -8,6 +8,6 @@ if(!require(shiny)){   install.packages("shiny")
 MyPath <- paste(getwd(),"sample_data.csv",sep="/")
 MyData <- as.data.frame(read.csv(MyPath, header=TRUE, sep=","))
 
-df <- read.csv(paste(getwd(),"map.csv",sep="/"), encoding = 'UTF-8')
+map <- read.csv(paste(getwd(),"map.csv",sep="/"), encoding = 'UTF-8')
 
 MyData["Count"] <-1
