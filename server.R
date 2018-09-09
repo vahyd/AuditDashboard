@@ -2,6 +2,7 @@ function(input, output, session) {
   
   # Combine the selected variables into a new data frame
   selectedData <- reactive({
+    
     if(input$year != "All" && input$sector != "All"){
       temp = MyData[MyData$Report.year == input$year,]
       temp[temp$sector== input$sector, ]
@@ -16,6 +17,7 @@ function(input, output, session) {
   seletedMap <- reactive({
     tmpMap <- map
     tmpData <- selectedData()
+    tmpData["Count"] <-1
     if(nrow(tmpData)==0)  {
       MyDataAgg <-  data.frame()
       map
@@ -56,8 +58,9 @@ function(input, output, session) {
     p <- plot_geo(seletedMap()) %>%
       add_trace(
         z = ~NUM, color = ~NUM, colors = 'Blues',
-        text = ~COUNTRY, locations = ~CODE, marker = list(line = l)
+        text = ~COUNTRY, locations = ~CODE, marker = list(line = l), showscale=FALSE
       ) %>%
+      layout( title = 'Number of Reports per Country') %>%
       layout(showlegend = TRUE, legend = list(font = list(size = 30)))%>%
       
       layout(

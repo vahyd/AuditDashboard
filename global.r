@@ -10,4 +10,4 @@ MyData <- as.data.frame(read.csv(MyPath, header=TRUE, sep=","))
 
 map <- read.csv(paste(getwd(),"map.csv",sep="/"), encoding = 'UTF-8')
 
-MyData["Count"] <-1
+
