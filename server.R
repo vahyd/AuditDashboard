@@ -17,11 +17,10 @@ function(input, output, session) {
   seletedMap <- reactive({
     tmpMap <- map
     tmpData <- selectedData()
-    tmpData["Count"] <-1
-    if(nrow(tmpData)==0)  {
-      MyDataAgg <-  data.frame()
-      map
-    }else{
+    
+    if(nrow(tmpData)!=0)  {
+      
+      tmpData["Count"] <-1
       MyDataAgg = aggregate(tmpData$Count,list(tmpData$country),FUN = sum)
       colnames(MyDataAgg) <- c("country","numbber.of.reports")
       
@@ -30,8 +29,9 @@ function(input, output, session) {
         tmpMap[tmpMap$COUNTRY == i,][3] = MyDataAgg$numbber.of.reports[l]
         l= l + 1
       }
-      tmpMap  
+      
     }
+    tmpMap  
     
   })
   
