@@ -51,7 +51,7 @@ function(input, output, session) {
     leafletProxy("map2") %>% clearMarkerClusters()
     leafletProxy("map2") %>% addMarkers(
       data = seletedMap2(),
-      popup = ~sprintf("Country = %s", country), layerId = rownames(seletedMap2()),
+      popup = ~sprintf("Country = %s Sector = %s Year = %s", country, sector, Report.year), layerId = rownames(seletedMap2()),
       clusterOptions = markerClusterOptions(), clusterId = "cluster1"
     )
   })

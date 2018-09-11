@@ -2,6 +2,8 @@ if(!require(plotly)){   install.packages("plotly")
   library(plotly) }
 if(!require(shiny)){   install.packages("shiny")   
   library(shiny) }
+if(!require(leaflet)){   install.packages("leaflet")   
+  library(leaflet) }
 
 # Read CSV into R
 
