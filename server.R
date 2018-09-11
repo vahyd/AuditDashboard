@@ -43,15 +43,21 @@ function(input, output, session) {
     
   })
   
+  icons <- awesomeIcons(
+    icon = 'ios-close',
+    iconColor = 'black',
+    library = 'ion',
+    markerColor = 'green'
+  )
   output$map2 <- renderLeaflet({
     leaflet(map2) %>% addTiles() %>% fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))
   })
 
   observeEvent(c(input$year,input$sector), {
     leafletProxy("map2") %>% clearMarkerClusters()
-    leafletProxy("map2") %>% addMarkers(
+    leafletProxy("map2") %>% addAwesomeMarkers(
       data = seletedMap2(),
-      popup = ~sprintf("Country = %s Sector = %s Year = %s", country, sector, Report.year), layerId = rownames(seletedMap2()),
+      popup = ~sprintf("%s", Issues), layerId = rownames(seletedMap2()),
       clusterOptions = markerClusterOptions(), clusterId = "cluster1"
     )
   })
