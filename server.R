@@ -35,6 +35,28 @@ function(input, output, session) {
     
   })
   
+  seletedMap2 <- reactive({
+    
+    tmpData <- selectedData()
+    tmpMap <- merge(x = tmpData, y = map, by = "country", all.x = TRUE)
+    tmpMap
+    
+  })
+  
+  output$map2 <- renderLeaflet({
+    leaflet(map2) %>% addTiles() %>% fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))
+  })
+
+  observeEvent(c(input$year,input$sector), {
+    leafletProxy("map2") %>% clearMarkerClusters()
+    leafletProxy("map2") %>% addMarkers(
+      data = seletedMap2(),
+      popup = ~sprintf("Country = %s", country), layerId = rownames(seletedMap2()),
+      clusterOptions = markerClusterOptions(), clusterId = "cluster1"
+    )
+  })
+  
+  
   output$table <- renderDataTable(selectedData())
   
   output$plot <- renderPlotly({

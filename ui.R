@@ -1,13 +1,19 @@
-pageWithSidebar(
-  headerPanel('Audit Dashboard'),
-  sidebarPanel(
-    selectInput('year', 'Select Year',choices = c("All",(unique(MyData$Report.year))),selected = "All"),
+fluidPage(
+  titlePanel('Audit Dashboard'),
+  fluidRow(
+    column(4,
+           selectInput('year', 'Select Year',choices = c("All",(unique(MyData$Report.year))),selected = "All")
     
-    selectInput('sector', 'Select Sector', choices = c("All",levels(unique(MyData$sector))),selected = "All")
-                
-  ),
-  mainPanel(
-    plotlyOutput("plot"),
+    ),
+    column(4,
+           selectInput('sector', 'Select Sector', choices = c("All",levels(unique(MyData$sector))),selected = "All")
+    )
+    ),
+    fluidRow(
+    
+    
+    #plotlyOutput("plot"),
+    leafletOutput("map2"),
     dataTableOutput('table')
   )
 )
