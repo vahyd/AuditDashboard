@@ -43,12 +43,9 @@ function(input, output, session) {
     
   })
   
-  icons <- awesomeIcons(
-    icon = 'ios-close',
-    iconColor = 'black',
-    library = 'ion',
-    markerColor = 'green'
-  )
+  icon.shape <- makeAwesomeIcon(icon = "add-circle", markerColor = "green",
+                                iconColor = "black", library = "ion")
+  
   output$map2 <- renderLeaflet({
     leaflet(map2) %>% addTiles() %>% fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))
   })
@@ -58,7 +55,8 @@ function(input, output, session) {
     leafletProxy("map2") %>% addAwesomeMarkers(
       data = seletedMap2(),
       popup = ~sprintf("%s", Issues), layerId = rownames(seletedMap2()),
-      clusterOptions = markerClusterOptions(), clusterId = "cluster1"
+      clusterOptions = markerClusterOptions(), clusterId = "cluster1",
+      icon = icon.shape
     )
   })
   
